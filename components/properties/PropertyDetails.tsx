@@ -1,4 +1,4 @@
-import { formatQuantity } from "@/utils/links";
+import { formatQuantity } from "@/utils/format";
 
 type PropertyDetailsProps = {
   details: {

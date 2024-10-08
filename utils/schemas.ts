@@ -99,3 +99,19 @@ export const propertySchema = z.object({
   }),
   amenities: z.string(),
 });
+
+// schema for the review data
+export const reviewSchema = z.object({
+  propertyId: z.string(),
+  rating: z.coerce.number().int().min(1, {
+    message: "rating must be a positive number.",
+  }),
+  comment: z
+    .string()
+    .min(10, {
+      message: "comment must be at least 10 characters.",
+    })
+    .max(1000, {
+      message: "comment must be less than 1000 characters.",
+    }),
+});

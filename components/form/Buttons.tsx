@@ -5,6 +5,7 @@ import { SignInButton } from "@clerk/nextjs";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useFormStatus } from "react-dom";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { LuPenSquare, LuTrash2 } from "react-icons/lu";
 
 type btnSize = "default" | "lg" | "sm";
 
@@ -14,6 +15,7 @@ type SubmitButtonProps = {
   size?: btnSize;
 };
 
+// Submit Button for forms
 export const SubmitButton = ({
   className = "",
   text = "submit",
@@ -40,6 +42,7 @@ export const SubmitButton = ({
   );
 };
 
+// SignIn Button for card
 export const CardSignInButton = () => {
   return (
     <SignInButton mode="modal">
@@ -56,6 +59,7 @@ export const CardSignInButton = () => {
   );
 };
 
+// Submit Button for card
 export const CardSubmitButton = ({ isFavorite }: { isFavorite: boolean }) => {
   const { pending } = useFormStatus();
 
@@ -74,6 +78,37 @@ export const CardSubmitButton = ({ isFavorite }: { isFavorite: boolean }) => {
       ) : (
         <FaRegHeart />
       )}
+    </Button>
+  );
+};
+
+type actionType = "edit" | "delete";
+
+// Submit Button for actions (edit, delete)
+export const IconButton = ({ type }: { type: actionType }) => {
+  const { pending } = useFormStatus();
+
+  const renderIcon = () => {
+    switch (type) {
+      case "edit":
+        return <LuPenSquare className="text-primary size-5" />;
+      case "delete":
+        return <LuTrash2 className="text-destructive size-5" />;
+      default:
+        const never: never = type;
+        throw new Error(`Invalid action type: ${never}`);
+    }
+  };
+
+  return (
+    <Button
+      type="submit"
+      disabled={pending}
+      size="icon"
+      variant="link"
+      className="p-2 cursor-pointer"
+    >
+      {pending ? <ReloadIcon className="animate-spin" /> : renderIcon()}
     </Button>
   );
 };
